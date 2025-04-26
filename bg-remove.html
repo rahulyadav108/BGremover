@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Free Background Remover & Image Compressor. Remove background from any image and optimize it with custom compression levels.">
+  <meta name="keywords" content="Background Remover, Image Compressor, Free Image Editing, Remove Image Background, Compress Images">
+  <meta name="author" content="YourWebsiteName">
+  <title>Background Remover & Compressor | Free Online Tool</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google AdSense -->
+  <!-- Replace 'YOUR-ADSENSE-AD-UNIT-ID' and 'YOUR-AD-SLOT-ID' -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    #output img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-white shadow">
+    <div class="container mx-auto p-4">
+      <h1 class="text-2xl font-bold text-center">Background Remover & Image Compressor</h1>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto flex-grow p-4">
+    <!-- Upload Form -->
+    <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+      <form id="imageForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-2">Upload Image:</label>
+          <input type="file" accept="image/*" id="imageInput" class="block w-full text-sm text-gray-600" required>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-2">Compression Level:</label>
+          <select id="compressionLevel" class="block w-full border-gray-300 rounded-md">
+            <option value="1">High Quality (Low Compression)</option>
+            <option value="0.7">Medium Quality</option>
+            <option value="0.5">Low Quality (High Compression)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+          Remove Background & Optimize
+        </button>
+      </form>
+    </section>
+
+    <!-- AdSense Ad Space -->
+    <section class="my-6">
+      <div class="flex justify-center">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-YOUR-ADSENSE-AD-UNIT-ID"
+             data-ad-slot="YOUR-AD-SLOT-ID"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+    </section>
+
+    <!-- Output Section -->
+    <section id="output" class="bg-white p-6 rounded-lg shadow-lg mt-6 text-center">
+      <p class="text-gray-600">Your processed image will appear here.</p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white p-4 text-center text-gray-500 text-sm">
+    © 2025 YourWebsiteName. All rights reserved.
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    document.getElementById('imageForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const fileInput = document.getElementById('imageInput');
+      const compressionLevel = parseFloat(document.getElementById('compressionLevel').value);
+
+      if (!fileInput.files.length) {
+        alert('Please upload an image.');
+        return;
+      }
+
+      const file = fileInput.files[0];
+
+      const output = document.getElementById('output');
+      output.innerHTML = '<p class="text-blue-600 font-semibold">Processing...</p>';
+
+      const img = new Image();
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        img.src = event.target.result;
+      };
+
+      img.onload = async function() {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        ctx.drawImage(img, 0, 0);
+
+        // Remove white background
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < imageData.data.length; i += 4) {
+          const r = imageData.data[i];
+          const g = imageData.data[i + 1];
+          const b = imageData.data[i + 2];
+          if (r > 240 && g > 240 && b > 240) {
+            imageData.data[i + 3] = 0;
+          }
+        }
+        ctx.putImageData(imageData, 0, 0);
+
+        // Compress and export
+        const compressedDataUrl = canvas.toDataURL('image/png', compressionLevel);
+
+        output.innerHTML = `
+          <p class="text-green-600 font-semibold mb-4">Background Removed & Optimized Image:</p>
+          <img src="${compressedDataUrl}" alt="Processed Image" class="mx-auto rounded shadow-md mb-4">
+          <a href="${compressedDataUrl}" download="optimized-image.png" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+            Download Image
+          </a>
+        `;
+      };
+
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
