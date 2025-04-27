@@ -3,203 +3,179 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Online Image Compressor - Compress Your Images for Free</title>
-  <meta name="description" content="Free and fast online image compression tool. Reduce image size without losing quality. Compress JPG, PNG, and WebP files easily.">
-  <meta name="keywords" content="image compression, image optimizer, online image compressor, reduce image size, compress jpg, compress png">
-  <!-- Google AdSense Placeholder -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <title>AI Tools: Remove BG & Enhance Image</title>
+  <meta name="description" content="Remove background from images and enhance image quality for free using AI. Fast and easy to use.">
+  <meta name="keywords" content="Background Remover, Image Enhancer, AI Photo Editing">
+  <meta name="author" content="YourWebsiteName">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* ======= Styles (CSS) ======= */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    header, footer {
-      background: #4CAF50;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-    }
-    main {
-      flex: 1;
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    .upload-section, .result-section {
-      background: white;
-      padding: 20px;
-      margin-top: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .upload-section input[type="file"] {
-      margin-bottom: 10px;
-    }
-    .upload-section label {
-      display: block;
-      margin-top: 10px;
-    }
-    #quality {
-      width: 100%;
-      margin-top: 5px;
-    }
-    #qualityValue {
-      display: inline-block;
-      margin-top: 5px;
-    }
-    #compressBtn {
-      background: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      margin-top: 10px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    #compressBtn:hover {
-      background: #45a049;
-    }
-    .result-section canvas {
-      max-width: 100%;
-      margin-top: 15px;
-    }
-    #downloadBtn {
-      display: inline-block;
-      margin-top: 15px;
-      background: #2196F3;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 5px;
-      text-decoration: none;
-    }
-    #downloadBtn:hover {
-      background: #0b7dda;
-    }
-    .ad-container {
-      margin: 20px 0;
-      text-align: center;
-    }
-    @media (max-width: 600px) {
-      header, footer {
-        font-size: 14px;
-      }
-      #compressBtn, #downloadBtn {
-        width: 100%;
-        font-size: 16px;
-      }
-    }
+    body { font-family: 'Inter', sans-serif; }
+    .preview img { max-width: 100%; border-radius: 1rem; margin-top: 1rem; }
   </style>
 </head>
 
-<body>
+<body class="bg-gradient-to-br from-gray-100 to-white min-h-screen flex flex-col">
 
-<header>
-  <h1>Online Image Compressor</h1>
-  <p>Reduce your image file size without compromising quality. 100% Free!</p>
-</header>
+  <!-- Header -->
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold text-indigo-600">AI Image Tools</h1>
+    </div>
+  </header>
 
-<main>
-  <!-- AdSense Top Banner -->
-  <section class="ad-container">
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-XXXXXX"
-      data-ad-slot="Ad_Unit_ID"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>
+  <!-- Main -->
+  <main class="flex-grow max-w-5xl mx-auto p-6 space-y-16">
 
-  <section class="upload-section">
-    <input type="file" id="upload" accept="image/*">
-    <label for="quality">Compression Level:</label>
-    <input type="range" id="quality" min="10" max="100" value="70">
-    <span id="qualityValue">70%</span>
-    <button id="compressBtn">Compress Image</button>
-  </section>
+    <!-- Section 1: Background Remover -->
+    <section class="bg-white rounded-2xl shadow-lg p-8">
+      <h2 class="text-2xl font-bold text-center text-indigo-600 mb-6">Remove Background</h2>
 
-  <section class="result-section">
-    <h2>Compressed Image:</h2>
-    <canvas id="canvas"></canvas>
-    <a id="downloadBtn" href="#" download="compressed-image.jpg">Download Compressed Image</a>
-  </section>
+      <form id="bgForm" class="space-y-6">
+        <input type="file" id="bgInput" accept="image/*" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-400" required>
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition duration-300">
+          Remove Background
+        </button>
+      </form>
 
-  <!-- AdSense Bottom Banner -->
-  <section class="ad-container">
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-XXXXXX"
-      data-ad-slot="Ad_Unit_ID"
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>
-</main>
+      <div id="bgPreview" class="preview text-center mt-6"></div>
+      <div id="bgResult" class="text-center mt-6"></div>
+    </section>
 
-<footer>
-  <p>&copy; 2025 Online Image Compressor. All rights reserved.</p>
-</footer>
+    <!-- Section 2: Enhance Image -->
+    <section class="bg-white rounded-2xl shadow-lg p-8">
+      <h2 class="text-2xl font-bold text-center text-green-600 mb-6">Enhance Image Quality</h2>
 
-<script>
-  /* ======= Script (JS) ======= */
-  const upload = document.getElementById('upload');
-  const quality = document.getElementById('quality');
-  const qualityValue = document.getElementById('qualityValue');
-  const compressBtn = document.getElementById('compressBtn');
-  const canvas = document.getElementById('canvas');
-  const downloadBtn = document.getElementById('downloadBtn');
+      <form id="enhanceForm" class="space-y-6">
+        <input type="file" id="enhanceInput" accept="image/*" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-400" required>
+        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg transition duration-300">
+          Enhance Image
+        </button>
+      </form>
 
-  let img = new Image();
-  let uploadedImageURL = '';
+      <div id="enhancePreview" class="preview text-center mt-6"></div>
+      <div id="enhanceResult" class="text-center mt-6"></div>
+    </section>
 
-  upload.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        img.src = e.target.result;
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white text-center p-6 text-gray-500 text-sm">
+    © 2025 YourWebsiteName. All rights reserved.
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Background Remove Section
+    const bgForm = document.getElementById('bgForm');
+    const bgInput = document.getElementById('bgInput');
+    const bgPreview = document.getElementById('bgPreview');
+    const bgResult = document.getElementById('bgResult');
+
+    bgInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          bgPreview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" />`;
+        };
+        reader.readAsDataURL(file);
       }
-      reader.readAsDataURL(file);
-    } else {
-      alert('Please select a valid image file.');
-    }
-  });
+    });
 
-  quality.addEventListener('input', () => {
-    qualityValue.textContent = `${quality.value}%`;
-  });
+    bgForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const file = bgInput.files[0];
+      if (!file) {
+        alert('Please select an image first!');
+        return;
+      }
 
-  compressBtn.addEventListener('click', () => {
-    if (!img.src) {
-      alert('Please upload an image first.');
-      return;
-    }
-    const ctx = canvas.getContext('2d');
-    img.onload = function() {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, img.width, img.height);
-      uploadedImageURL = canvas.toDataURL('image/jpeg', quality.value / 100);
-      downloadBtn.href = uploadedImageURL;
-    }
-    if (img.complete) {
-      img.onload();
-    }
-  });
-</script>
+      bgResult.innerHTML = '<p class="text-blue-500 font-semibold">Processing background removal...</p>';
+
+      const formData = new FormData();
+      formData.append('image_file', file);
+      formData.append('size', 'auto');
+
+      try {
+        const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+          method: 'POST',
+          headers: { 'X-Api-Key': 'mNoXmdsTBXzq3wNZ2C38QqxM' },
+          body: formData
+        });
+
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
+          bgResult.innerHTML = `
+            <img src="${url}" alt="Result" class="rounded-2xl shadow-lg mb-4" />
+            <a href="${url}" download="no-bg.png" class="inline-block bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold transition">Download</a>
+          `;
+        } else {
+          const error = await response.json();
+          bgResult.innerHTML = `<p class="text-red-500">${error.errors[0].detail}</p>`;
+        }
+      } catch (err) {
+        bgResult.innerHTML = `<p class="text-red-500">${err.message}</p>`;
+      }
+    });
+
+    // Enhance Image Section
+    const enhanceForm = document.getElementById('enhanceForm');
+    const enhanceInput = document.getElementById('enhanceInput');
+    const enhancePreview = document.getElementById('enhancePreview');
+    const enhanceResult = document.getElementById('enhanceResult');
+
+    enhanceInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          enhancePreview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" />`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    enhanceForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const file = enhanceInput.files[0];
+      if (!file) {
+        alert('Please select an image first!');
+        return;
+      }
+
+      enhanceResult.innerHTML = '<p class="text-green-500 font-semibold">Enhancing image quality...</p>';
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      try {
+        // Use a free public API for enhancing
+        const response = await fetch('https://api.deepai.org/api/torch-srgan', {
+          method: 'POST',
+          headers: { 'Api-Key': 'quickstart-QUdJIGlzIGNvbWluZy4uLi4K' }, // Demo key from DeepAI
+          body: formData
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          enhanceResult.innerHTML = `
+            <img src="${result.output_url}" alt="Enhanced Image" class="rounded-2xl shadow-lg mb-4" />
+            <a href="${result.output_url}" download="enhanced.png" class="inline-block bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition">Download</a>
+          `;
+        } else {
+          const error = await response.json();
+          enhanceResult.innerHTML = `<p class="text-red-500">Failed to enhance: ${error.error}</p>`;
+        }
+      } catch (err) {
+        enhanceResult.innerHTML = `<p class="text-red-500">${err.message}</p>`;
+      }
+    });
+
+  </script>
 
 </body>
 </html>
